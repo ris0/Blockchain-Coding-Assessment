@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-flow: column wrap;
 }
 
 .App-logo {
@@ -25,4 +27,20 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+input[type=text] {
+  width: 250px;
+}
+
+.search-bar {
+  margin: 10px;
+}
+
+.summary {
+  margin: 10px;
+}
+
+.transaction-summary {
+  margin: 10px;
 }
