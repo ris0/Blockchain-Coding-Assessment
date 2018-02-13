@@ -10,6 +10,7 @@ class SearchBar extends Component {
                 <Button 
                     bsStyle="primary"
                     bsSize="small"
+                    block
                     onClick={this.props.searchAddress}> 
                     Submit
                 </Button>

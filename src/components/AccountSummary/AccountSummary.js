@@ -7,7 +7,6 @@ function AccountSummary({ address, totalReceived, totalSent, balance, totalTrans
     <div className="summary">    
       <Table responsive>
         <tbody>
-
           <tr>
             <td>Address: </td>
             <td>{address}</td>
