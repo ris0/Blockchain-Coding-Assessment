@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function TransactionSummary({ transactions }) {
     return (
-        <div>
+        <div className="transaction-summary">
             Transactions
             <div>
                 {transactions.map((tx) => {

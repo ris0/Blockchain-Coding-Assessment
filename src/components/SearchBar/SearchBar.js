@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
 
 class SearchBar extends Component {
     render() {
         return (
-            <div>
+            <div className="search-bar">
                 <input ref="input" type="text" placeholder="Enter account address..." />
-                <button onClick={this.props.searchAddress}> Submit </button>
+                <Button 
+                    bsStyle="primary"
+                    bsSize="small"
+                    onClick={this.props.searchAddress}> 
+                    Submit
+                </Button>
             </div>
         )
     }

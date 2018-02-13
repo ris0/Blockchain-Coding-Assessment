@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 import './App.css';
+import Header from './Header/Header.js'
 import AccountSummary from './AccountSummary/AccountSummary.js';
 import TransactionSummary from './TransactionSummary/TransactionSummary.js';
 import SearchBar from './SearchBar/SearchBar.js';
+import { Button } from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {
@@ -12,13 +13,10 @@ class App extends Component {
       address: '',
       balance: 0,
       totalReceived: 0,
+      totalSent: 0,
       totalTransactions: 0,
       txs: []
     }
-  }
-
-  componentDidMount = () => {
-    // this.getBalance();
   }
 
   convertToBtc = (balance) => {
@@ -33,15 +31,17 @@ class App extends Component {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
+        console.log('data', data.wallet);
         const finalBalance = this.convertToBtc(data.wallet.final_balance);
         const totalReceived = this.convertToBtc(data.wallet.total_received);
+        const totalSent = this.convertToBtc(data.wallet.total_sent);
         const totalTransactions = data.wallet.n_tx;
         const arrayOfTxs = [];
         data.txs.forEach(tx => arrayOfTxs.push(tx));
         const state = {
           balance: finalBalance,
           totalReceived: totalReceived,
+          totalSent: totalSent,
           totalTransactions: totalTransactions,
           txs: arrayOfTxs
         };
@@ -50,39 +50,29 @@ class App extends Component {
   };
 
   searchAddress = () => {
-    this.setState({
-      address: this.a.refs.input.value
-    })
+    this.setState({ address: this.a.refs.input.value })
     setTimeout(() => { this.getBalance() }, 200)
-    // this.getBalance();
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Blockchain.info</h1>
-        </header>
+        <Header />
 
-        <div className="search-bar">
-          <SearchBar 
-            ref={component => this.a = component}
-            searchAddress={this.searchAddress}
-          />
-        </div>
+        <SearchBar
+          ref={component => this.a = component}
+          searchAddress={this.searchAddress}
+        />
 
-        <div className="summary">
-          <AccountSummary
-            totalTransactions={this.state.balance}
-            balance={this.state.totalTransactions}
-            totalReceived={this.state.totalReceived}
-          />
-        </div>
+        <AccountSummary
+          address={this.state.address}
+          totalReceived={this.state.totalReceived}
+          totalSent={this.state.totalSent}
+          balance={this.state.totalTransactions}
+          totalTransactions={this.state.balance}
+        />
 
-        <div className="transaction-summary">
-          <TransactionSummary transactions={this.state.txs} />
-        </div>
+        <TransactionSummary transactions={this.state.txs} />
       </div>
     );
   }
