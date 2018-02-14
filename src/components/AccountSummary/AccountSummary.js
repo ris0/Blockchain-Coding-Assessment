@@ -5,7 +5,11 @@ import { Table } from 'react-bootstrap';
 function AccountSummary({ address, totalReceived, totalSent, balance, totalTransactions }) {
   return (
     <div className="summary">    
-      <Table responsive>
+      <Table 
+        bordered={true}
+        condensed={true}
+        responsive
+      >
         <tbody>
           <tr>
             <td>Address: </td>

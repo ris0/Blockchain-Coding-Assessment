@@ -4,7 +4,6 @@ import Header from './Header/Header.js'
 import AccountSummary from './AccountSummary/AccountSummary.js';
 import TransactionSummary from './TransactionSummary/TransactionSummary.js';
 import SearchBar from './SearchBar/SearchBar.js';
-import { Button } from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {
