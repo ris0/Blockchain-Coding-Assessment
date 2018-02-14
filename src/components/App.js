@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import Header from './Header/Header.js'
-import AccountSummary from './AccountSummary/AccountSummary.js';
-import TransactionSummary from './TransactionSummary/TransactionSummary.js';
-import SearchBar from './SearchBar/SearchBar.js';
+import Header from './Header/Header'
+import AccountSummary from './AccountSummary/AccountSummary';
+import TransactionSummary from './TransactionSummary/TransactionSummary';
+import SearchBar from './SearchBar/SearchBar';
+import { convertToBtc } from '../util/helper'
 
 class App extends Component {
   constructor(props) {
@@ -18,10 +19,6 @@ class App extends Component {
     }
   }
 
-  convertToBtc = (balance) => {
-    return balance / 100000000;
-  }
-
   getBalance = () => {
     // const addr = '17CUX3NGq2EeLwjXHAU95y3TjoRRvBmrbR'
     const addr = this.state.address;
@@ -31,9 +28,9 @@ class App extends Component {
       .then(response => response.json())
       .then(data => {
         console.log('data', data.wallet);
-        const finalBalance = this.convertToBtc(data.wallet.final_balance);
-        const totalReceived = this.convertToBtc(data.wallet.total_received);
-        const totalSent = this.convertToBtc(data.wallet.total_sent);
+        const finalBalance = convertToBtc(data.wallet.final_balance);
+        const totalReceived = convertToBtc(data.wallet.total_received);
+        const totalSent = convertToBtc(data.wallet.total_sent);
         const totalTransactions = data.wallet.n_tx;
         const arrayOfTxs = [];
         data.txs.forEach(tx => arrayOfTxs.push(tx));
