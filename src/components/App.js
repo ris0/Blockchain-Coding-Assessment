@@ -27,7 +27,6 @@ class App extends Component {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log('data', data.wallet);
         const finalBalance = convertToBtc(data.wallet.final_balance);
         const totalReceived = convertToBtc(data.wallet.total_received);
         const totalSent = convertToBtc(data.wallet.total_sent);

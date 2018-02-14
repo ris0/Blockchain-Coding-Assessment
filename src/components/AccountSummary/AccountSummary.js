@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'react-bootstrap';
+import { Table, Label } from 'react-bootstrap';
 
 function AccountSummary({ address, totalReceived, totalSent, balance, totalTransactions }) {
   return (
-    <div className="summary">    
-      <Table 
+    <div className="summary">
+      <Label bsStyle="default">Account Summary</Label>
+      <Table
         bordered={true}
         condensed={true}
         responsive

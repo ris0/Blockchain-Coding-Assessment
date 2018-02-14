@@ -7,11 +7,11 @@ class SearchBar extends Component {
         return (
             <div className="search-bar">
                 <input ref="input" type="text" placeholder="Enter account address..." />
-                <Button 
+                <Button
                     bsStyle="primary"
                     bsSize="small"
                     block
-                    onClick={this.props.searchAddress}> 
+                    onClick={this.props.searchAddress}>
                     Submit
                 </Button>
             </div>
@@ -20,11 +20,11 @@ class SearchBar extends Component {
 }
 
 SearchBar.propTypes = {
-  searchAddress: PropTypes.func.isRequired
+    searchAddress: PropTypes.func.isRequired
 }
 
 SearchBar.defaultProps = {
-  searchAddress: () => {}
+    searchAddress: () => { }
 }
 
 export default SearchBar;
