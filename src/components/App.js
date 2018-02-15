@@ -15,9 +15,69 @@ class App extends Component {
       totalReceived: 0,
       totalSent: 0,
       totalTransactions: 0,
-      txs: []
+      txs: [],
+      newTransactions: false
     }
   }
+
+  componentDidMount() {
+    // this.testWebSocket(); // should only execute whenever an account address is passed
+  }
+
+  // invokeTestFunc = () => {
+  //     this.setState({ newTransactions: true })
+  // }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //     return nextState.newTransactions === true;
+  // }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //     if (prevState.newTransactions) {
+  //         const transactions = this.state.txs;
+  //         const newTx = this.bar();
+  //         transactions.unshift(newTx);
+  //         console.log(transactions);
+  //         this.setState({
+  //             txs: transactions,
+  //             newTransactions: false,
+  //         });            
+  //     }
+  // }
+
+  // bar = () => {
+  //     var fakeTx = []
+  //     var tx = {
+  //         time: 123,
+  //         hash: "abc123",
+  //         result: 1111,
+  //         balance: 9999
+  //     }
+  //     fakeTx.push(tx);
+  //     return fakeTx;
+  // }
+
+  // testWebSocket() {
+  //     var websocket = new WebSocket("ws://ws.blockchain.info/inv");
+  //     websocket.onopen = (evt) => {
+  //         console.log('Connection open', evt);
+  //         var msg1 = {
+  //             op: "unconfirmed_sub"
+  //         }
+
+  //         // subscribing to an address
+  //         var msg2 = {
+  //             "op": "addr_sub",
+  //             "addr": "1H6ZZpRmMnrw8ytepV3BYwMjYYnEkWDqVP"
+  //         }
+  //         websocket.send(JSON.stringify(msg1));
+  //     }
+  //     websocket.onclose = function (evt) { console.log('Connection closed') };
+  //     websocket.onmessage = (evt) => {
+  //         this.invokeTestFunc();
+  //     };
+  //     websocket.onerror = function (evt) { console.log('Error occurred', evt) };
+  // }
 
   getBalance = () => {
     // const addr = '17CUX3NGq2EeLwjXHAU95y3TjoRRvBmrbR'
