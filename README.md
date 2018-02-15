@@ -4,6 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Clone this repository to your local machine
 - Run command: 'npm install'
 - After installing all of the project's dependencies, run command: 'npm start'
+- Optional: Visit 'https://ris0.github.io/Blockchain-Coding-Assessment/' for a deployed version of this application
 
 ## Objective
 Build a simple application using React and the Blockchain API that loads and displays the balance and transactions for a bitcoin address someone searches and updates on incoming transactions.
