@@ -16,74 +16,60 @@ class App extends Component {
       totalSent: 0,
       totalTransactions: 0,
       txs: [],
-      newTransactions: false
+      newTxMsg: false,
+      newTxs: []
+    }
+    this.newTransactionReceived = this.newTransactionReceived.bind(this);
+  }
+
+  newTransactionReceived = () => {
+    this.setState({ newTxMsg: true })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.newTxMsg) {
+      var transactions = this.state.txs;
+      transactions.unshift(this.state.newTxs);
+      this.setState({
+        txs: transactions,
+        newTxMsg: false,
+      });
     }
   }
 
-  componentDidMount() {
-    // this.testWebSocket(); // should only execute whenever an account address is passed
+  openSocketConnection() {
+    const websocket = new WebSocket("ws://ws.blockchain.info/inv");
+    websocket.onopen = (evt) => {
+      const msg = {
+        "op": "addr_sub",
+        "addr": this.a.refs.input.value
+      }
+      websocket.send(JSON.stringify(msg));
+    };
+
+    websocket.onmessage = (evt) => {
+      const newData = JSON.parse(evt.data);
+      const newTxObj = {
+        time: newData.x.time,
+        hash: newData.x.hash
+      }
+      const result = [];
+      result.push(newTxObj);
+      this.newTransactionReceived()
+      this.setState({
+        newTxs: result,
+        newTxMsg: false
+      });
+    };
+
+    websocket.onclose = (evt) => { console.log('Connection closed') };
+    websocket.onerror = (evt) => { console.log('Error occurred', evt) };
   }
 
-  // invokeTestFunc = () => {
-  //     this.setState({ newTransactions: true })
-  // }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //     return nextState.newTransactions === true;
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //     if (prevState.newTransactions) {
-  //         const transactions = this.state.txs;
-  //         const newTx = this.bar();
-  //         transactions.unshift(newTx);
-  //         console.log(transactions);
-  //         this.setState({
-  //             txs: transactions,
-  //             newTransactions: false,
-  //         });            
-  //     }
-  // }
-
-  // bar = () => {
-  //     var fakeTx = []
-  //     var tx = {
-  //         time: 123,
-  //         hash: "abc123",
-  //         result: 1111,
-  //         balance: 9999
-  //     }
-  //     fakeTx.push(tx);
-  //     return fakeTx;
-  // }
-
-  // testWebSocket() {
-  //     var websocket = new WebSocket("ws://ws.blockchain.info/inv");
-  //     websocket.onopen = (evt) => {
-  //         console.log('Connection open', evt);
-  //         var msg1 = {
-  //             op: "unconfirmed_sub"
-  //         }
-
-  //         // subscribing to an address
-  //         var msg2 = {
-  //             "op": "addr_sub",
-  //             "addr": "1H6ZZpRmMnrw8ytepV3BYwMjYYnEkWDqVP"
-  //         }
-  //         websocket.send(JSON.stringify(msg1));
-  //     }
-  //     websocket.onclose = function (evt) { console.log('Connection closed') };
-  //     websocket.onmessage = (evt) => {
-  //         this.invokeTestFunc();
-  //     };
-  //     websocket.onerror = function (evt) { console.log('Error occurred', evt) };
-  // }
-
   getBalance = () => {
-    // const addr = '17CUX3NGq2EeLwjXHAU95y3TjoRRvBmrbR'
+    console.log('get balance');
     const addr = this.state.address;
     const url = `https://blockchain.info/multiaddr?cors=true&active=${addr}`;
-
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -102,11 +88,18 @@ class App extends Component {
         };
         this.setState(state);
       })
+
+    this.openSocketConnection();
   };
 
   searchAddress = () => {
-    this.setState({ address: this.a.refs.input.value })
-    setTimeout(() => { this.getBalance() }, 200)
+    const inputVal = this.a.refs.input.value
+    if (inputVal.length === 34) {
+      this.setState({ address: inputVal })
+      setTimeout(() => { this.getBalance() }, 200)
+    } else {
+      alert("Incorrect address");
+    }
   }
 
   render() {
