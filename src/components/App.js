@@ -116,8 +116,8 @@ class App extends Component {
           address={this.state.address}
           totalReceived={this.state.totalReceived}
           totalSent={this.state.totalSent}
-          balance={this.state.totalTransactions}
-          totalTransactions={this.state.balance}
+          balance={this.state.balance}
+          totalTransactions={this.state.totalTransactions}
         />
 
         <TransactionSummary transactions={this.state.txs} />
